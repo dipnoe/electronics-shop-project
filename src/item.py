@@ -7,6 +7,7 @@ class Item:
     """
     pay_rate = 1.0
     all = []
+    PATH_TO_CSV = '../src/items.csv'
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -53,7 +54,7 @@ class Item:
         данными из файла src/items.csv
         """
 
-        with open('../src/items.csv', 'r', encoding='windows-1251') as file:
+        with open(cls.PATH_TO_CSV, 'r', encoding='windows-1251') as file:
             csv_dict = csv.DictReader(file)
             for atr in csv_dict:
                 Item(atr['name'], atr['price'], atr['quantity'])
