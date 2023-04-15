@@ -7,7 +7,7 @@ class Item:
     """
     pay_rate = 1.0
     all = []
-    PATH_TO_CSV = '../src/items.csv'
+    PATH_TO_CSV = 'src/items.csv'
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -22,6 +22,12 @@ class Item:
         self.quantity = quantity
         Item.all.append(self)
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self) -> str:
+        return f'{self.__name}'
+
     @property
     def name(self):
         return self.__name
@@ -31,7 +37,7 @@ class Item:
         if len(name_) < 11:
             self.__name = name_
         else:
-            raise Exception('Name is too long.')
+            raise ValueError('Name is too long.')
 
     def calculate_total_price(self) -> float:
         """
