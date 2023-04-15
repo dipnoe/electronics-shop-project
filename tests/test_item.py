@@ -26,7 +26,7 @@ def test_apply_discount(item):
 def test_name_length(item):
     item.name = 'Наушники'
     assert item.name == 'Наушники'
-    with pytest.raises(Exception):
+    with pytest.raises(ValueError):
         item.name = 'Отвратительно длинное название'
 
 
@@ -38,3 +38,11 @@ def test_instantiate_from_csv():
     Item.all = []
     Item.instantiate_from_csv()
     assert len(Item.all) == 5
+
+
+def test_repr(item):
+    assert repr(item) == "Item('Смартфон', 10000, 20)"
+
+
+def test_str(item):
+    assert str(item) == 'Смартфон'
