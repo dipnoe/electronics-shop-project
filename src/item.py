@@ -28,6 +28,13 @@ class Item:
     def __str__(self) -> str:
         return f'{self.__name}'
 
+    def __add__(self, other) -> int:
+        """
+        Складывание количества товара, относящегося к классам Phone или Item
+        """
+        if issubclass(other.__class__, Item):
+            return self.quantity + other.quantity
+
     @property
     def name(self):
         return self.__name
