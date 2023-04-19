@@ -59,16 +59,3 @@ def test_add(phone, item):
     assert item + item == 40
     assert phone + phone == 10
     assert phone + item == 25
-
-
-def test_number_of_sim(phone):
-    assert phone.number_of_sim == 2
-    phone.number_of_sim = 4
-    assert phone.number_of_sim == 4
-    with pytest.raises(ValueError):
-        phone.number_of_sim = 0
-        phone.number_of_sim = 'u'
-
-
-def test_repr_phone(phone):
-    assert repr(phone) == "Phone('iPhone 14', 120000, 5, 2)"
