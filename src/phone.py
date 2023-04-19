@@ -23,6 +23,9 @@ class Phone(Item):
         return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity}, {self.number_of_sim})"
 
     def __add__(self, other) -> int:
+        """
+        Складывание количества товара, относящегося к классам Phone или Item
+        """
         if isinstance(other, Item) or isinstance(other, Phone):
             return self.quantity + other.quantity
         else:
