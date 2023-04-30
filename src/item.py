@@ -83,7 +83,7 @@ class Item:
             open(cls.PATH_TO_CSV, 'r', encoding='windows-1251')
 
         except FileNotFoundError:
-            print('Отсутствует файл item.csv')
+            raise FileNotFoundError('Отсутствует файл item.csv')
 
         else:
             with open(cls.PATH_TO_CSV, 'r', encoding='windows-1251') as file:
@@ -94,7 +94,7 @@ class Item:
                         CSVChecker(atr)
 
                     except InstantiateCSVError:
-                        print('Файл item.csv поврежден')
+                        raise InstantiateCSVError('Файл item.csv поврежден')
 
                     else:
                         Item(atr['name'], float(atr['price']), int(atr['quantity']))
