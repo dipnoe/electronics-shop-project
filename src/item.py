@@ -1,4 +1,16 @@
 import csv
+from src.errors import InstantiateCSVError
+
+
+class CSVChecker:
+    """
+    Класс для проверки целостности csv файла
+    """
+    def __init__(self, dict_: dict):
+        if not dict_['name'] or not dict_['price'] or not dict_['quantity']:
+            raise InstantiateCSVError
+        else:
+            self.dict_ = dict_
 
 
 class Item:
@@ -67,11 +79,25 @@ class Item:
         Класс-метод, инициализирующий экземпляры класса Item
         данными из файла src/items.csv
         """
+        try:
+            open(cls.PATH_TO_CSV, 'r', encoding='windows-1251')
 
-        with open(cls.PATH_TO_CSV, 'r', encoding='windows-1251') as file:
-            csv_dict = csv.DictReader(file)
-            for atr in csv_dict:
-                Item(atr['name'], atr['price'], atr['quantity'])
+        except FileNotFoundError:
+            print('Отсутствует файл item.csv')
+
+        else:
+            with open(cls.PATH_TO_CSV, 'r', encoding='windows-1251') as file:
+                csv_dict = csv.DictReader(file)
+
+                for atr in csv_dict:
+                    try:
+                        CSVChecker(atr)
+
+                    except InstantiateCSVError:
+                        print('Файл item.csv поврежден')
+
+                    else:
+                        Item(atr['name'], float(atr['price']), int(atr['quantity']))
 
     @staticmethod
     def string_to_number(str_: str) -> int:
