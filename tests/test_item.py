@@ -2,6 +2,7 @@
 import pytest
 from src.item import Item
 from src.phone import Phone
+from src.errors import InstantiateCSVError
 
 
 @pytest.fixture
@@ -40,7 +41,7 @@ def test_string_to_number():
     assert Item.string_to_number('2') == 2
 
 
-def test_instantiate_from_csv():
+def test_positive_instantiate_from_csv():
     Item.all = []
     Item.instantiate_from_csv()
     assert len(Item.all) == 5
@@ -59,3 +60,13 @@ def test_add(phone, item):
     assert item + item == 40
     assert phone + phone == 10
     assert phone + item == 25
+
+
+def test_negative_csv():
+    with pytest.raises(FileNotFoundError):
+        Item.PATH_TO_CSV = 'test.csv'
+        Item.instantiate_from_csv()
+
+    with pytest.raises(InstantiateCSVError):
+        Item.PATH_TO_CSV = 'src/item.csv'
+        Item.instantiate_from_csv()
